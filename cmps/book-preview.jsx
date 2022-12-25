@@ -2,6 +2,8 @@
 
 export function BookPreview({ book }) {
 
+    console.log('book preview', book);
+
     return <article className="book-preview">
         {/* <img src={`https://robohash.org/${book.id}?set=set5`} alt="" /> */}
         <img
