@@ -1,24 +1,24 @@
 .book-list {
     padding: 15px 0 0;
-    /* font-family: Tahoma, Geneva, Verdana, sans-serif; */
     text-align: center;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     /* grid-template-columns: 1fr 1fr; */
     list-style: none;
     gap: 10px;
-    /* background-color: aquamarine; */
-    margin: 0 20px;
+    margin: 0 20px 10px 20px;
 }
 
 .book-list ul {
     margin: 0;
 }
+
 .book-list li {
     background-color: var(--clr1bg-light);
     border-radius: 0.5rem;
     /* height: 300px; */
 }
+
 /* .book-list li button {
     font-weight: bold;
 }

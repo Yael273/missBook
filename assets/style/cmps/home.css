@@ -1,7 +1,7 @@
 .home {
     /* background-color: var(--clr1bg-light); */
     text-align: center;
-    /* height: 100vh; */
+    height: 100vh;
     margin: 0;
 }
 .home h2{

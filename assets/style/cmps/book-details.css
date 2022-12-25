@@ -1,18 +1,23 @@
-.book-details{
-    /* margin: 10px; */
+.book-details {
     background-color: var(--clr1bg-light);
-    /* border-radius: 0.5rem; */
     padding: 20px;
-    /* height: 90vh; */
 }
-img{
+
+img {
     width: 25%;
 }
-.red{
+
+.red {
     color: red;
 }
-.green{
+
+.green {
     color: green;
+}
+
+.book-details h1 {
+    font-size: 2rem;
+    color: var(--clr1);
 }
 
 /* .return{
