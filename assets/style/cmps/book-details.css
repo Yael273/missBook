@@ -1,0 +1,21 @@
+.book-details{
+    /* margin: 10px; */
+    background-color: var(--clr1bg-light);
+    /* border-radius: 0.5rem; */
+    padding: 20px;
+    height: 90vh;
+}
+img{
+    width: 25%;
+}
+.red{
+    color: red;
+}
+.green{
+    color: green;
+}
+
+/* .return{
+    position: absolute;
+    left: 0;
+} */

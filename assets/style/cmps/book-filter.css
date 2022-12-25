@@ -1,11 +1,11 @@
-
-.book-filter{
+.book-filter {
     text-align: center;
-    background-color: var(--clr1bg);
+    background-color: var(--clr1bg-light);
     padding: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
+    margin: 20px;
+    border-radius: 0.5rem;
 }
