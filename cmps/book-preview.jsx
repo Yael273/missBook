@@ -13,7 +13,7 @@ export function BookPreview({ book }) {
             }}
         />
         <h3>{book.title}</h3>
-        <p>{book.listPrice} {book.listPrice.currencyCode}</p>
+        <p>{book.listPrice.amount} {book.listPrice.currencyCode}</p>
 
     </article>
 }
