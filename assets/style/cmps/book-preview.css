@@ -1,0 +1,9 @@
+img {
+    width: 100px;
+}
+.book-preview{
+    /* margin: 10px; */
+    background-color: rgb(104, 191, 228);
+    height: 300px;
+    padding: 10px;
+}

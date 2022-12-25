@@ -1,0 +1,14 @@
+.book-list {
+    font-family: Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    /* grid-template-columns: 1fr 1fr; */
+    list-style: none;
+    gap: 10px;
+    /* background-color: aquamarine; */
+}
+
+.book-list ul {
+    margin: 0;
+}
