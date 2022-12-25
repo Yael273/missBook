@@ -44,7 +44,7 @@ function save(book) {
     }
 }
 
-function getEmptyBook(title = '', listPrice = '') {
+function getEmptyBook(title = '') {
     return {
         id: '',
         title,
@@ -511,8 +511,8 @@ function _createBooks() {
     }
 }
 
-function _createBook(title, listPrice = 250) {
-    const book = getEmptyBook(title, listPrice)
+function _createBook(title) {
+    const book = getEmptyBook(title, listPrice.amount)
     book.id = utilService.makeId()
     return book
 }
