@@ -3,7 +3,8 @@ img {
 }
 .book-preview{
     /* margin: 10px; */
-    background-color: rgb(104, 191, 228);
-    height: 300px;
+    /* background-color: var(--clr1bg-light); */
+    /* height: 300px; */
     padding: 10px;
+    border-radius: 0.5rem;
 }

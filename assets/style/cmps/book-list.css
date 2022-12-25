@@ -1,5 +1,6 @@
 .book-list {
-    font-family: Tahoma, Geneva, Verdana, sans-serif;
+    padding: 15px 0 0;
+    /* font-family: Tahoma, Geneva, Verdana, sans-serif; */
     text-align: center;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -11,4 +12,12 @@
 
 .book-list ul {
     margin: 0;
+}
+.book-list li {
+    background-color: var(--clr1bg-light);
+    border-radius: 0.5rem;
+    /* height: 300px; */
+}
+.book-list div {
+    padding: 10px;
 }

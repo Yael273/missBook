@@ -13,8 +13,8 @@ export function App() {
         <header className="app-header">
             <h1>Miss Book</h1>
             <nav className="app-nav">
-                <a href="#" onClick={() => setPage('home')}>Home</a> |
-                <a href="#" onClick={() => setPage('about')}>About</a> |
+                <a href="#" onClick={() => setPage('home')}>Home</a> 
+                <a href="#" onClick={() => setPage('about')}>About</a> 
                 <a href="#" onClick={() => setPage('book')}>Books</a>
             </nav>
         </header>

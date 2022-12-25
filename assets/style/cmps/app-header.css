@@ -1,7 +1,21 @@
 .app-header {
   background-color: var(--clr1);
-  color: var(--clr1bg);
+  color: var(--clr2bg);
   padding: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-nav a{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  /* margin: 10px; */
+  padding: 20px 10px;
+}
+
+a:hover {
+  color: var(--clr1bg);
 }
 
 @media(max-width: 720px) {
