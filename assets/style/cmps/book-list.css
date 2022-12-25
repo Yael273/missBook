@@ -19,6 +19,12 @@
     border-radius: 0.5rem;
     /* height: 300px; */
 }
+/* .book-list li button {
+    font-weight: bold;
+}
+.book-list li button:hover {
+    font-weight: bold;
+} */
 .book-list div {
     padding: 10px;
 }
