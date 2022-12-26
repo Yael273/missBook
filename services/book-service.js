@@ -11,6 +11,8 @@ export const bookService = {
     save,
     getEmptyBook,
     getDefaultFilter,
+    addReview,
+    getEmptyReview,
 }
 
 function query(filterBy = getDefaultFilter()) {
@@ -55,6 +57,21 @@ function getEmptyBook() {
         }
     }
 }
+
+function addReview(bookId, review){
+        return storageService.put(BOOK_KEY, book)
+
+}
+function getEmptyReview(){
+    const date = new Date
+    return {
+        id: bookId,
+        fullName: '',
+        rate: 0,
+        readAt: date.toLocaleDateString(),
+    }
+}
+
 
 function getDefaultFilter() {
     return { txt: '', minPrice: '' }

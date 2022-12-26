@@ -1,4 +1,4 @@
-
+import { utilService } from "../services/util.service.js"
 
 export function BookPreview({ book }) {
 
@@ -16,7 +16,7 @@ export function BookPreview({ book }) {
             }}
         />
         <h3>{book.title}</h3>
-        <p>{book.listPrice.amount} {book.listPrice.currencyCode}</p>
+        <p>{utilService.getAmount(book.listPrice.amount, book.listPrice.currencyCode)}</p>
 
     </article>
 }

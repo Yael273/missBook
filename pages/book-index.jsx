@@ -3,6 +3,7 @@ const { Link } = ReactRouterDOM
 
 import { BookFilter } from "../cmps/book-filter.jsx"
 import { BookList } from "../cmps/Book-list.jsx"
+import { Loader } from "../cmps/loader.jsx"
 
 import { bookService } from "../services/book-service.js"
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js';
@@ -23,7 +24,7 @@ export function BookIndex() {
             setBooks(books)
             setIsLoading(false)
         })
-        
+
     }
 
     function onSetFilter(filterByFromFilter) {
@@ -36,23 +37,23 @@ export function BookIndex() {
             setBooks(updatedBooks)
             showSuccessMsg('Book removed')
         })
-        .catch((err) => {
-            console.log('Had issues removing', err)
-            showErrorMsg('Could not remove car, try again please!')
-        })
+            .catch((err) => {
+                console.log('Had issues removing', err)
+                showErrorMsg('Could not remove car, try again please!')
+            })
     }
 
 
-    if (!books) return <h1>loading...</h1>
+    if (!books) return <Loader />
     return <div className="book-index">
 
-            <BookFilter onSetFilter={onSetFilter} />
-            <Link to="/book/edit">Add Book</Link>
+        <BookFilter onSetFilter={onSetFilter} />
+        <Link to="/book/edit">Add Book</Link>
 
-            {!isLoading &&  <BookList books={books} onRemoveBook={onRemoveBook}/>}
-            {isLoading && <div>Loading..</div>}
-            {!books.length && <div>No items to show..</div>}
-       
-       
+        {!isLoading && <BookList books={books} onRemoveBook={onRemoveBook} />}
+        {isLoading && <Loader />}
+        {!books.length && <div>No items to show..</div>}
+
+
     </div>
 }
