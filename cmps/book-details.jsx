@@ -1,7 +1,32 @@
+const { useEffect, useState } = React
+const { useParams, useNavigate, Link } = ReactRouterDOM
+
+import { bookService } from "../services/book-service.js";
 import { LongTxt } from "./long-txt.jsx";
 
+export function BookDetails() {
 
-export function BookDetails({ book, onGoBack }) {
+    const [book, setBook] = useState(null)
+    const params = useParams()
+    const navigate = useNavigate()
+
+
+    useEffect(() => {
+        loadBook()
+    }, [])
+
+    function loadBook() {
+        bookService.get(params.bookId)
+            .then((book) => setBook(book))
+            .catch((err) => {
+                console.log('Had issues in book details', err)
+                navigate('/book')
+            })
+    }
+
+    function onGoBack() {
+        navigate('/book')
+    }
 
 
     function pageCount() {
@@ -12,8 +37,8 @@ export function BookDetails({ book, onGoBack }) {
         </div>
     }
 
-    console.log('book from details', book);
 
+    if (!book) return <div>Loading...</div>
     return <section className="book-details">
         <img
             src={`${book.thumbnail}`}
@@ -29,6 +54,7 @@ export function BookDetails({ book, onGoBack }) {
         <LongTxt txt={book.description} length={100} />
         <h5 className={book.listPrice.amount > 150 ? 'red' : '' || book.listPrice.amount < 20 ? 'green' : ''}>{book.listPrice.amount} {book.listPrice.currencyCode}</h5>
         <h4>{book.listPrice.isOnSale ? 'On Sale' : ''}</h4>
+        <Link to={`/book/edit/${book.id}`}>Edit</Link>
         <button className="return" onClick={onGoBack}>return</button>
     </section>
 }

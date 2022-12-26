@@ -1,25 +1,29 @@
 const { useState, useEffect } = React
+const { Link } = ReactRouterDOM
 
-import { UserMsg } from "../cmps/user-msg.jsx"
-import { BookDetails } from "../cmps/book-details.jsx"
 import { BookFilter } from "../cmps/book-filter.jsx"
 import { BookList } from "../cmps/Book-list.jsx"
+
 import { bookService } from "../services/book-service.js"
+import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js';
 
 export function BookIndex() {
 
     const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
-    // const [books, setBooks] = useState([])
-    const [books, setBooks] = useState(null)
-    const [selectedBook, setSelectedBook] = useState(null)
-    const [userMsg, setUserMsg] = useState('')
+    const [books, setBooks] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
+        setIsLoading(true)
         loadBooks()
     }, [filterBy])
 
     function loadBooks() {
-        bookService.query(filterBy).then(books => setBooks(books))
+        bookService.query(filterBy).then(books => {
+            setBooks(books)
+            setIsLoading(false)
+        })
+        
     }
 
     function onSetFilter(filterByFromFilter) {
@@ -30,34 +34,25 @@ export function BookIndex() {
         bookService.remove(bookId).then(() => {
             const updatedBooks = books.filter(book => book.id !== bookId)
             setBooks(updatedBooks)
-            flashMsg('Book removed!')
+            showSuccessMsg('Book removed')
         })
-    }
-
-    function onSelectBook(bookId) {
-        bookService.get(bookId).then((book) => {
-            setSelectedBook(book)
+        .catch((err) => {
+            console.log('Had issues removing', err)
+            showErrorMsg('Could not remove car, try again please!')
         })
-    }
-
-    function flashMsg(msg) {
-        setUserMsg(msg)
-        setTimeout(() => {
-            setUserMsg('')
-        }, 3000)
     }
 
 
     if (!books) return <h1>loading...</h1>
     return <div className="book-index">
-        {userMsg && <UserMsg msg={userMsg} />}
-        {!selectedBook && <div>
+
             <BookFilter onSetFilter={onSetFilter} />
-            <BookList books={books} onRemoveBook={onRemoveBook} onSelectBook={onSelectBook} />
-        </div>
-        }
-        {selectedBook && <BookDetails
-            book={selectedBook}
-            onGoBack={() => setSelectedBook(null)} />}
+            <Link to="/book/edit">Add Book</Link>
+
+            {!isLoading &&  <BookList books={books} onRemoveBook={onRemoveBook}/>}
+            {isLoading && <div>Loading..</div>}
+            {!books.length && <div>No items to show..</div>}
+       
+       
     </div>
 }

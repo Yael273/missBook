@@ -2,8 +2,9 @@
 
 export function BookPreview({ book }) {
 
-    console.log('book preview', book);
-
+    // console.log('book preview', book);
+    // const imgName = book.name ? book.name : 'default'
+    // <img src={`assets/img/${imgName}.png`} />
     return <article className="book-preview">
         {/* <img src={`https://robohash.org/${book.id}?set=set5`} alt="" /> */}
         <img

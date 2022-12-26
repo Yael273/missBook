@@ -44,13 +44,14 @@ function save(book) {
     }
 }
 
-function getEmptyBook(title = '') {
+function getEmptyBook() {
     return {
-        id: '',
-        title,
+        title: '',
+        description: utilService.makeLorem(),
         listPrice:
         {
-            amount: 60
+            amount: '',
+            currencyCode: 'ILS',
         }
     }
 }
