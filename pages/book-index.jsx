@@ -9,7 +9,8 @@ import { bookService } from "../services/book-service.js"
 export function BookIndex() {
 
     const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
-    const [books, setBooks] = useState([])
+    // const [books, setBooks] = useState([])
+    const [books, setBooks] = useState(null)
     const [selectedBook, setSelectedBook] = useState(null)
     const [userMsg, setUserMsg] = useState('')
 
@@ -47,6 +48,7 @@ export function BookIndex() {
     }
 
 
+    if (!books) return <h1>loading...</h1>
     return <div className="book-index">
         {userMsg && <UserMsg msg={userMsg} />}
         {!selectedBook && <div>
