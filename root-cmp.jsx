@@ -10,6 +10,7 @@ import { AboutUsIndex } from './cmps/about-us-index.jsx'
 import { BookDetails } from './cmps/book-details.jsx'
 import { BookEdit } from './cmps/book-edit.jsx'
 import { UserMsg } from './cmps/user-msg.jsx'
+import { AboutTeam } from './cmps/about-team.jsx'
 
 export function App() {
 
@@ -24,6 +25,7 @@ export function App() {
                     <Route element={<Home />} path="/" />
                     <Route element={<AboutUs />} path="/about">
                         <Route element={<AboutUsIndex />} path="/about" />
+                        <Route element={<AboutTeam />} path="/about/team" />
                     </Route>
 
                     <Route element={<BookIndex />} path="/book" />

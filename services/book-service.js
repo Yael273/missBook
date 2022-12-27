@@ -1,9 +1,11 @@
 import { utilService } from './util.service.js'
 import { storageService } from './async-storage.service.js'
 
+const API_KEY = 'AIzaSyAPZ0iGnif_nDL5PmQ2gyH4JUsUui78X0M'
 const BOOK_KEY = 'bookDB'
 const GOOGLE_BOOK_KEY = 'googleBookDB'
 _createBooks()
+getGoogleBooks()
 
 export const bookService = {
     query,
@@ -20,6 +22,7 @@ export const bookService = {
     getNextBookId,
     getPrevBookId,
     getGoogleBooks,
+    addGoogleBook,
 }
 
 function query(filterBy = getDefaultFilter()) {
@@ -109,8 +112,11 @@ function saveReview(bookId, reviewToSave) {
     const review = _createReview(reviewToSave)
     console.log('review:', review);
 
+    if (!book.reviews) {
+        book.reviews = []
+    }
     book.reviews.unshift(review)
-    _saveBooksToStorage(books)
+    utilService.saveToStorage(BOOK_KEY, books)
     return Promise.resolve(review)
 }
 
@@ -119,7 +125,7 @@ function removeReview(bookId, reviewId) {
     let book = books.find((book) => book.id === bookId)
     const newReviews = book.reviews.filter((review) => review.id !== reviewId)
     book.reviews = newReviews
-    _saveBooksToStorage(books)
+    utilService.saveToStorage(BOOK_KEY, books)
     return Promise.resolve()
 }
 
@@ -1334,13 +1340,37 @@ function getGoogleBooks() {
                 ]
             }
         ]
-        
+
         utilService.saveToStorage(GOOGLE_BOOK_KEY, googlebooks)
     }
     return googlebooks
 }
 
 
-function addGoogleBook(item){
-   
+
+
+function addGoogleBook(item) {
+    console.log('item', item);
+    const googleBook = {
+        id: '',
+        title: item.volumeInfo.title ? item.volumeInfo.title : '',
+        subtitle: item.volumeInfo.subtitle ? item.volumeInfo.subtitle : '',
+        authors: item.volumeInfo.authors ? item.volumeInfo.authors : '',
+        publishedDate: item.volumeInfo.publishedDate ? item.volumeInfo.publishedDate : '',
+        description: item.volumeInfo.description ? item.volumeInfo.description : '',
+        pageCount: item.volumeInfo.pageCount ? item.volumeInfo.pageCount : '',
+        categories: item.volumeInfo.categories ? item.volumeInfo.categories : '',
+        thumbnail: item.volumeInfo.imageLinks.thumbnail ? item.volumeInfo.imageLinks.thumbnail : '',
+        language: item.volumeInfo.language ? item.volumeInfo.language : '',
+        'listPrice': {
+            amount: '',
+            currencyCode: '',
+            isOnSale: false
+        },
+        reviews: []
+        
+    }
+    
+    console.log('googleBook:', googleBook)
+    return googleBook
 }

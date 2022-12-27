@@ -45,18 +45,40 @@ export function BookIndex() {
     }
 
 
+    function onAddGoogleBook(book) {
+        console.log(book);
+        const addBook = bookService.addGoogleBook(book)
+        // if (bookToEdit.authors.length && bookToEdit.authors.includes(',')) bookToEdit.authors = bookToEdit.authors.split(',')
+        // if (bookToEdit.categories.length && bookToEdit.categories.includes(',')) bookToEdit.categories = bookToEdit.categories.split(',')
+        // if (!bookToEdit.thumbnail) bookToEdit.thumbnail = '../assets/img/default.jpg'
+        console.log('book after', addBook);
+        if(books.findIndex(book => book.title === addBook.title)) return showErrorMsg('Book already in list')
+        bookService.save(addBook).then((book) => {
+            console.log('book saved', book);
+            books.push(book)
+            setBooks(books.slice())
+            showSuccessMsg('Book saved!')
+        }).catch((err) => {
+            console.log('Had issues adding:', err)
+            showErrorMsg('Could not add book, try again please!')
+        })
+
+    }
+
+
+
     if (!books) return <Loader />
     return <div className="book-index">
 
         <BookFilter onSetFilter={onSetFilter} />
         <Link to="/book/edit" className="add-book">Add Book</Link>
-        <BookAdd />
+        <BookAdd onAddGoogleBook={onAddGoogleBook} />
 
         {!isLoading && <BookList books={books} onRemoveBook={onRemoveBook} />}
         {isLoading && <Loader />}
         {!books.length && <div>No items to show..</div>}
 
-       
+
 
     </div>
 }

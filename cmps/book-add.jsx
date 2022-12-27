@@ -1,53 +1,71 @@
+
+const { useNavigate, useParams, Link } = ReactRouterDOM
+const { useState, useEffect, useRef } = React
+
 import { bookService } from "../services/book-service.js"
+import { googleBookService } from "../services/google-book-service.js"
+import { utilService } from "../services/util.service.js"
 
-const { useState, useEffect } = React
+export function BookAdd({ onAddGoogleBook }) {
 
-export function BookAdd() {
+    const [googleBooks, setGoogleBooks] = useState([])
 
-    const API_KEY = 'AIzaSyAPZ0iGnif_nDL5PmQ2gyH4JUsUui78X0M'
+   
+    const navigate = useNavigate()
+    const debouncedSearchTerm = useRef(null)
 
-    const [googkeBookToEdit, setgoogleBookToEdit] = useState(bookService.getEmptyBook())
+    useEffect(() => {
+        loadGoogleBookList()
+        debouncedSearchTerm.current = utilService.debounce(loadGoogleBookList)
+    }, [])
+
+    function loadGoogleBookList(txt = '') {
+        googleBookService.query(txt)
+        .then(booksToUpdate => {
+            setGoogleBooks(booksToUpdate)
+        })
+        .catch((err) => {
+            console.log('Had issues in book details:', err)
+            navigate('/book')
+        })
+    }
 
 
     function handleChange(ev) {
         ev.preventDefault()
-
+        const value = ev.target.value
+        debouncedSearchTerm.current(value)
     }
 
-    function onAddgoogleBook(bookId) {
-        console.log(bookId);
-        // if (bookToEdit.authors.length && bookToEdit.authors.includes(',')) bookToEdit.authors = bookToEdit.authors.split(',')
-        // if (bookToEdit.categories.length && bookToEdit.categories.includes(',')) bookToEdit.categories = bookToEdit.categories.split(',')
-        // if (!bookToEdit.thumbnail) bookToEdit.thumbnail = '../assets/img/default.jpg'
-        bookService.save(googkeBookToEdit).then((book) => {
-            console.log('book saved', book);
-            // googkeBookToEdit.id ? showSuccessMsg('Book saved!') : showSuccessMsg('Book added!')
-            // navigate('/book')
-        }).catch((err) => {
-            console.log('Had issues adding:', err)
-            // showErrorMsg('Could not add book, try again please!')
-        })
-
-    }
-
+ 
 
     return <section className="book-add">
-        <h1>hello</h1>
-        <label onChange={handleChange}>
+
+        <label>
             <input type="search"
-                placeholder="Search book to add" />
+                placeholder="Search book to add"
+                onChange={handleChange}
+                 />
         </label>
 
-        <ul className="google-books">
-            {
-                bookService.getGoogleBooks()[0].items.map(book => <li key={book.id}>
-                    {book.volumeInfo.title}
-                    <div>
-                        <button onClick={() => onAddgoogleBook(book.id)}>+</button>
-                    </div>
-                </li>)
-            }
-        </ul>
+
+        <section className="google-books">
+
+
+            {googleBooks.map(book =>
+                <ul key={book.id}>
+                    <li key={book.id}>
+                        {book.volumeInfo.title}
+                    </li>
+                    <button onClick={() => onAddGoogleBook(book)}>+</button>
+                </ul>
+            )}
+
+
+        </section>
+
 
     </section>
 }
+
+

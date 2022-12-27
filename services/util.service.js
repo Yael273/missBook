@@ -1,3 +1,5 @@
+
+
 export const utilService = {
     makeId,
     makeLorem,
@@ -7,7 +9,8 @@ export const utilService = {
     padNum,
     getDayName,
     getMonthName,
-    getAmount
+    getAmount,
+    debounce
 }
 
 function makeId(length = 6) {
@@ -88,4 +91,12 @@ function animateCSS(el, animation) {
 
         el.addEventListener('animationend', handleAnimationEnd, { once: true })
     })
+}
+
+function debounce(func, timeout = 500) {
+    let timer
+    return (...args) => {
+        clearTimeout(timer)
+        timer = setTimeout(() => { func.apply(this, args) }, timeout)
+    }
 }
