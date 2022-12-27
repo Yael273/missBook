@@ -52,7 +52,7 @@ export function BookIndex() {
         // if (bookToEdit.categories.length && bookToEdit.categories.includes(',')) bookToEdit.categories = bookToEdit.categories.split(',')
         // if (!bookToEdit.thumbnail) bookToEdit.thumbnail = '../assets/img/default.jpg'
         console.log('book after', addBook);
-        if(books.findIndex(book => book.title === addBook.title)) return showErrorMsg('Book already in list')
+        if(books.find(book => book.title === addBook.title)) return showErrorMsg('Book already in list')
         bookService.save(addBook).then((book) => {
             console.log('book saved', book);
             books.push(book)
