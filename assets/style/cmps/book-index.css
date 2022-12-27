@@ -2,3 +2,19 @@
     text-align: center;
     height: 100%;
 }
+
+.add-book {
+    background-color: var(--clr1);
+    color: var(--clr1bg-light);
+    display: flex;
+    justify-content: center;
+    margin: 10px 20px;
+    padding: 5px;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    transition: 0.5s;
+}
+.add-book:hover {
+    opacity: 0.8;
+
+}

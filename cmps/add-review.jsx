@@ -1,91 +1,54 @@
-const { useState, useEffect } = React
-const { useNavigate, useParams, Link } = ReactRouterDOM
-
+const { useState } = React
 
 import { bookService } from "../services/book-service.js"
-import { eventBusService, showSuccessMsg } from "../services/event-bus.service.js"
 
 
-export function AddReview({ book }) {
+export function AddReview({ onSaveReview }) {
 
-    // console.log('book from addreview:', book);
-
-    const [bookToReview, setBookToReview] = useState(bookService.getEmptyBook())
-    const navigate = useNavigate()
-    const { bookId } = useParams()
-
-    console.log('bookToReview', bookToReview.fullName);
-    console.log('bookToReview', bookToReview.rate);
-    console.log('bookToReview', bookToReview.readAt);
-
-    useEffect(() => {
-        if (!bookId) return
-        loadBook()
-    }, [])
-
-    function loadBook() {
-        bookService.get(bookId)
-            .then((book) => setBookToReview(book))
-            .catch((err) => {
-                console.log('Had issues in book details', err)
-                navigate('/book')
-            })
-    }
-
+    const [review, setReview] = useState(bookService.getDefaultReview())
     function handleChange({ target }) {
-        let { value, type, name: field } = target
-        value = type === 'number' ? +value : value
-        setBookToReview((prevReview) => ({ ...prevReview, [field]: value }))
+        let { value, name: field, type } = target
+        value = type === "range" ? +value : value
+        setReview((prevReview => {
+            return { ...prevReview, [field]: value }
+        }))
     }
 
-    function onSaveBookReview(ev) {
+    function onSubmitReview(ev) {
         ev.preventDefault()
-        bookService.addReview(book.id, bookToReview).then((review) => {
-            console.log('review saved', review);
-            // showSuccessMsg('review saved!')
-            // navigate('/book')
-        })
+        onSaveReview(review)
     }
 
+    return <article className="add-review">
+    <h2>Rate this book</h2>
+    <form onSubmit={onSubmitReview}>
+        <label htmlFor="full-name">Full name:</label>
+        <input type="text"
+            id="full-name"
+            name="fullName"
+            placeholder="Enter full name..."
+            value={review.fullName}
+            onChange={handleChange} />
 
-    return <section className="add-review">
+        <label htmlFor="rating">Rate this book:</label>
+        <input type="number"
+            id="rating"
+            max="5"
+            min="0"
+            name="rating"
+            value={review.rating}
+            title={review.rating}
+            onChange={handleChange}
+        />
 
-        <h2>{'leave a review'}</h2>
+        <label htmlFor="readAt">Read at:</label>
+        <input type="date"
+            id="readAt"
+            name="readAt"
+            value={review.readAt}
+            onChange={handleChange} />
 
-        <form onSubmit={onSaveBookReview}>
-            <label htmlFor="fullName">Full Name: </label>
-            <input type="text"
-                name="fullName"
-                id="fullName"
-                placeholder="Enter full name..."
-                value={bookToReview.fullName}
-                onChange={handleChange}
-                required
-            />
-            <label htmlFor="rate">rate: </label>
-            <input type="number"
-                name="rate"
-                id="rate"
-                min='0'
-                max='5'
-                placeholder="Enter rating..."
-                value={bookToReview.rate}
-                onChange={handleChange}
-                required
-            />
-            <label htmlFor="readAt">Visited at: </label>
-            <input type="date"
-                name="readAt"
-                id="readAt"
-                placeholder="Visited at..."
-                value={bookToReview.readAt}
-                onChange={handleChange}
-
-            />
-
-            <div>
-                <button>{'Add'}</button>
-            </div>
-        </form>
-    </section>
+        <button>Submit</button>
+    </form>
+</article>
 }
